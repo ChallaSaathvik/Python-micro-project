@@ -1,0 +1,136 @@
+# ============================================
+#   Inventory Management System
+# ============================================
+
+inventory = {}
+
+
+def add_item():
+    print("\n----------------------------------------")
+    print("            ADD ITEM")
+    print("----------------------------------------")
+
+    name = input("Enter item name: ").strip().lower()
+
+    if name in inventory:
+        print(f">> '{name}' already exists. Use update option.")
+        return
+
+    try:
+        quantity = int(input("Enter quantity: "))
+        price = float(input("Enter price (Rs): "))
+    except ValueError:
+        print(">> Invalid input.")
+        return
+
+    inventory[name] = {"quantity": quantity, "price": price}
+    print(f">> '{name}' added successfully!")
+
+
+def update_item():
+    print("\n----------------------------------------")
+    print("           UPDATE ITEM")
+    print("----------------------------------------")
+
+    name = input("Enter item name: ").strip().lower()
+
+    if name not in inventory:
+        print(">> Item not found!")
+        return
+
+    print(f"Current -> Qty: {inventory[name]['quantity']}, Price: Rs {inventory[name]['price']}")
+
+    try:
+        quantity = int(input("Enter new quantity: "))
+        price = float(input("Enter new price (Rs): "))
+    except ValueError:
+        print(">> Invalid input.")
+        return
+
+    inventory[name] = {"quantity": quantity, "price": price}
+    print(">> Item updated successfully!")
+
+
+def display_inventory():
+    print("\n----------------------------------------")
+    print("          INVENTORY LIST")
+    print("----------------------------------------")
+
+    if not inventory:
+        print(">> Inventory is empty!")
+        return
+
+    print(f"{'Item Name':<15}{'Quantity':<10}{'Price'}")
+    print("----------------------------------------")
+
+    for name, details in inventory.items():
+        print(f"{name.capitalize():<15}{details['quantity']:<10}{details['price']}")
+
+    print("----------------------------------------")
+
+
+def search_item():
+    print("\n----------------------------------------")
+    print("            SEARCH ITEM")
+    print("----------------------------------------")
+
+    name = input("Enter item name: ").strip().lower()
+
+    if name in inventory:
+        details = inventory[name]
+        print(f">> Found: {name.capitalize()}")
+        print(f"   Quantity: {details['quantity']}")
+        print(f"   Price: Rs {details['price']}")
+    else:
+        print(">> Item not found!")
+
+
+def delete_item():
+    print("\n----------------------------------------")
+    print("            DELETE ITEM")
+    print("----------------------------------------")
+
+    name = input("Enter item name: ").strip().lower()
+
+    if name in inventory:
+        del inventory[name]
+        print(">> Item deleted successfully!")
+    else:
+        print(">> Item not found!")
+
+
+def main():
+    print("----------------------------------------")
+    print("   INVENTORY MANAGEMENT SYSTEM")
+    print("----------------------------------------")
+
+    while True:
+        print("\n1. Add Item")
+        print("2. Update Item")
+        print("3. Display Items")
+        print("4. Search Item")
+        print("5. Delete Item")
+        print("6. Exit")
+
+        choice = input("\nEnter choice: ")
+
+        if choice == "1":
+            add_item()
+        elif choice == "2":
+            update_item()
+        elif choice == "3":
+            display_inventory()
+        elif choice == "4":
+            search_item()
+        elif choice == "5":
+            delete_item()
+        elif choice == "6":
+            print("\n>> Exiting program...")
+            print("----------------------------------------")
+            break
+        else:
+            print(">> Invalid choice!")
+
+
+if __name__ == "__main__":
+    main()
